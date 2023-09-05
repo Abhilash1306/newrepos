@@ -1,0 +1,213 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+#define MAX_USERS 100
+
+// User structure
+struct User {
+    char username[20];
+    char password[20];
+    float bill;
+};
+
+// Function prototypes
+void adminLogin();
+void addUser();
+void searchUser();
+void displayUsers();
+void deleteUser();
+void addBill();
+void userLogin();
+
+// Global variables
+struct User users[MAX_USERS];
+int userCount = 0;
+
+int main() {
+    int choice;
+    
+    while (1) {
+        printf("\nElectricity Bill Management System\n");
+        printf("1. Admin Login\n");
+        printf("2. User Login\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        switch (choice) {
+            case 1:
+                adminLogin();
+                break;
+            case 2:
+                userLogin();
+                break;
+            case 3:
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+    return 0;
+}
+
+// Admin login function
+void adminLogin() {
+    char adminPassword[20];
+    printf("Enter admin password: ");
+    scanf("%s", adminPassword);
+    
+    // Check if the admin password is correct (you should use a secure password handling method)
+    if (strcmp(adminPassword, "adminpass") != 0) {
+        printf("Incorrect admin password.\n");
+        return;
+    }
+    
+    while (1) {
+        int adminChoice;
+        
+        printf("\nAdmin Menu\n");
+        printf("1. Add User\n");
+        printf("2. Search User\n");
+        printf("3. Display User\n");
+        printf("4. Delete User\n");
+        printf("5. Add Bill\n");
+        printf("6. Logout\n");
+        printf("Enter your choice: ");
+        scanf("%d", &adminChoice);
+        
+        switch (adminChoice) {
+            case 1:
+                addUser();
+                break;
+            case 2:
+                searchUser();
+                break;
+            case 3:
+                displayUsers();
+                break;
+            case 4:
+                deleteUser();
+                break;
+            case 5:
+                addBill();
+                break;
+            case 6:
+                return;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+}
+
+// Add a user
+void addUser() {
+    if (userCount < MAX_USERS) {
+        printf("Enter username: ");
+        scanf("%s", users[userCount].username);
+        printf("Enter password: ");
+        scanf("%s", users[userCount].password);
+        users[userCount].bill = 0;
+        userCount++;
+        printf("User added successfully.\n");
+    } else {
+        printf("User limit reached. Cannot add more users.\n");
+    }
+}
+
+// Search for a user
+void searchUser() {
+    char searchUsername[20];
+    printf("Enter username to search: ");
+    scanf("%s", searchUsername);
+    
+    for (int i = 0; i < userCount; i++) {
+        if (strcmp(searchUsername, users[i].username) == 0) {
+            printf("User found.\n");
+            printf("Username: %s\n", users[i].username);
+            printf("Bill: %.2f\n", users[i].bill);
+            return;
+        }
+    }
+    printf("User not found.\n");
+}
+// Function to display all registered users
+void displayUsers() {
+    if (userCount == 0) {
+        printf("No users registered yet.\n");
+        return;
+    }
+
+    printf("\nRegistered Users:\n");
+    printf("--------------------------------------------------\n");
+    printf("Username\tBill Amount\n");
+    printf("--------------------------------------------------\n");
+
+    for (int i = 0; i < userCount; i++) {
+        printf("%s\t\t%.2f\n", users[i].username, users[i].bill);
+    }
+
+    printf("--------------------------------------------------\n");
+}
+
+// Delete a user
+void deleteUser() {
+    char deleteUsername[20];
+    printf("Enter username to delete: ");
+    scanf("%s", deleteUsername);
+    
+    for (int i = 0; i < userCount; i++) {
+        if (strcmp(deleteUsername, users[i].username) == 0) {
+            // Shift users to fill the gap
+            for (int j = i; j < userCount - 1; j++) {
+                strcpy(users[j].username, users[j + 1].username);
+                strcpy(users[j].password, users[j + 1].password);
+                users[j].bill = users[j + 1].bill;
+            }
+            userCount--;
+            printf("User deleted successfully.\n");
+            return;
+        }
+    }
+    printf("User not found.\n");
+}
+
+// Add bill for a user
+void addBill() {
+    char username[20];
+    float billAmount;
+    printf("Enter username: ");
+    scanf("%s", username);
+    
+    for (int i = 0; i < userCount; i++) {
+        if (strcmp(username, users[i].username) == 0) {
+            printf("Enter bill amount: ");
+            scanf("%f", &billAmount);
+            users[i].bill += billAmount;
+            printf("Bill added successfully.\n");
+            return;
+        }
+    }
+    printf("User not found.\n");
+}
+
+// User login function
+void userLogin() {
+    char username[20];
+    char password[20];
+    printf("Enter username: ");
+    scanf("%s", username);
+    printf("Enter password: ");
+    scanf("%s", password);
+    
+    for (int i = 0; i < userCount; i++) {
+        if (strcmp(username, users[i].username) == 0 && strcmp(password, users[i].password) == 0) {
+            printf("Login successful.\n");
+            printf("Username: %s\n", users[i].username);
+            printf("Bill: %.2f\n", users[i].bill);
+            return;
+        }
+    }
+    printf("Login failed!.\nEither User doesn't exists or Either Username or password is incorrect.\n");
+}
