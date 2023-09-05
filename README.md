@@ -4,6 +4,7 @@
 
 ![Mind Map](https://github.com/Abhilash1306/newrepos/assets/120955802/4f0d54c6-16f9-4bae-938f-771670197387)
 
+# Admin Feature Details
 - Add User: Allows the admin to add a new user to the electricity bill system. The admin is prompted to enter the user's name and his password.
 - Search User: Enables the admin to search for a user by providing either the contact's name. If a match is found, the user details are displayed.
 - Display User: Displays all the users currently stored in the electricity bill system. Each user's name and his electricity bill are shown.
