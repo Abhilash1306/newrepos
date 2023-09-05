@@ -21,3 +21,9 @@ The Electricity bill management system has two user roles:
 - Exit: Exits the program and performs necessary cleanup, including saving bills to the file.
 # Flowchart
 ![Flowchart (1)](https://github.com/Abhilash1306/newrepos/assets/120955802/5eab87a2-5727-4e5c-8e5a-3f2c0fe9d405)
+
+# User Login and details
+- The USER login is for regular users or customers of the electricty bill management system.
+- For any modification user can ask permission to the admin
+- Registered users can log in to access the system .
+- USER login does not provide access to administrative functions.
